@@ -33,7 +33,7 @@ const App = () => {
               <div key={kr.keyResult} style={{margin: '50px 0'}}>
                 <Description abbreviation="KR" text={kr.keyResult} />
                 <LinearProgress variant="determinate" value={normalise(kr.current, 0, kr.goal)} />
-                <Typography color="textSecondary" variant="h6" style={{textAlign: 'center', marginTop: 10}}>{kr.suffix === '%' ? `${kr.current} %` : `${kr.current}/${kr.goal} ${kr.suffix}`}</Typography>
+                <Typography color="textSecondary" variant="h6" style={{textAlign: 'center', marginTop: 10}}>{kr.suffix === '%' ? `${100 * kr.current/kr.goal} %` : `${kr.current}/${kr.goal} ${kr.suffix}`}</Typography>
               </div>
             ))}
           </Paper>
