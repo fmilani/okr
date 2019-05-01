@@ -3,10 +3,11 @@
   "okrs": [{
     "objective": "Here goes the description of your very first objective, and it can be as long as you want it to be",
     "krs": [{
-      "keyResult": "The description of the first key result of the first objective goes here",
+      "keyResult": "The description of the first key result of the first objective goes here. You can make it a hyperlink by specifying a link property on data.json",
       "goal": 100,
       "current": 90,
-      "suffix": "%"
+      "suffix": "%",
+      "link": "https://example.com/"
     }, {
       "keyResult": "This is where you write the description of the second key result of your first objective",
       "goal": 5,
