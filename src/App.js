@@ -21,6 +21,9 @@ const Description = ({abbreviation, text, link}) => {
 const calculateObjectiveProgress = krs =>
   krs.map(kr => kr.current / kr.goal).reduce((total, each) => total + each)/krs.length
 
+const calculateLastObjectiveProgress = krs =>
+  krs.map(kr => kr.last / kr.goal).reduce((total, each) => total + each)/krs.length
+
 const App = () => {
   const { title, okrs } = Data;
   const normalise = (value, min, max) => (value - min) * 100 / (max - min);
@@ -31,11 +34,14 @@ const App = () => {
         return (
           <Paper key={okr.objective} style={{margin: 50, padding: 20}} elevation={5}>
             <Description text={okr.objective} abbreviation="O" />
-            <LinearProgress variant="determinate" value={normalise(calculateObjectiveProgress(okr.krs), 0, 1)} />
+            {(okr.krs.filter(kr => kr.last).length > 0) &&
+              <LinearProgress variant="determinate" value={normalise(calculateLastObjectiveProgress(okr.krs), 0, 1)} color="secondary"/>}
+            <LinearProgress variant="determinate" value={normalise(calculateObjectiveProgress(okr.krs), 0, 1)}   />
             <Typography color="textSecondary" variant="h6" style={{textAlign: 'center', marginTop: 10}}>{`${(calculateObjectiveProgress(okr.krs) * 100).toFixed()} %`}</Typography>
             {okr.krs.map(kr => (
               <div key={kr.keyResult} style={{margin: '50px 0'}}>
                 <Description abbreviation="KR" text={kr.keyResult} link={kr.link}/>
+                {kr.last &&  <LinearProgress variant="determinate" value={normalise(kr.last, 0, kr.goal)} color="secondary" />}
                 <LinearProgress variant="determinate" value={normalise(kr.current, 0, kr.goal)} />
                 <Typography color="textSecondary" variant="h6" style={{textAlign: 'center', marginTop: 10}}>{kr.suffix === '%' ? `${100 * kr.current/kr.goal} %` : `${kr.current}/${kr.goal} ${kr.suffix}`}</Typography>
               </div>
